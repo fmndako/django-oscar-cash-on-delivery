@@ -3,18 +3,20 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from oscar.apps.checkout import views
+from oscar.apps.checkout.views import PaymentDetailsView
 from oscar.apps.payment.models import Source
 from oscar.apps.payment.models import SourceType
 from oscar.core.loading import get_model
 
-from cashondelivery import gateway
 from cashondelivery.forms import BillingAddressForm
+from cashondelivery import gateway
 
 BillingAddress = get_model("order", "BillingAddress")
 
 
-class PaymentDetailsView(views.PaymentDetailsView):
+class PaymentDetailsView(PaymentDetailsView):
+    template_name = 'cashondelivery/payment_details.html'
+    template_name_preview = 'cashondelivery/preview.html'
 
     def get_context_data(self, **kwargs):
         ctx = super(PaymentDetailsView, self).get_context_data(**kwargs)
