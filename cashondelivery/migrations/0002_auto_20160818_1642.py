@@ -15,12 +15,14 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name='cashondeliverytransaction',
-            options={'ordering': ('-date_created',), 'verbose_name': 'Cash on Delivery'},
+            options={'ordering': ('-date_created',),
+                     'verbose_name': 'Cash on Delivery'},
         ),
         migrations.AlterField(
             model_name='cashondeliverytransaction',
             name='amount',
-            field=models.DecimalField(blank=True, decimal_places=2, max_digits=12, null=True, verbose_name='Amount'),
+            field=models.DecimalField(
+                blank=True, decimal_places=2, max_digits=12, null=True, verbose_name='Amount'),
         ),
         migrations.AlterField(
             model_name='cashondeliverytransaction',
@@ -30,26 +32,31 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name='cashondeliverytransaction',
             name='currency',
-            field=models.CharField(blank=True, max_length=8, null=True, verbose_name='Currency'),
+            field=models.CharField(
+                blank=True, max_length=8, null=True, verbose_name='Currency'),
         ),
         migrations.AlterField(
             model_name='cashondeliverytransaction',
             name='date_confirmed',
-            field=models.DateTimeField(auto_now=True, verbose_name='Date Confirmed'),
+            field=models.DateTimeField(
+                auto_now=True, verbose_name='Date Confirmed'),
         ),
         migrations.AlterField(
             model_name='cashondeliverytransaction',
             name='date_created',
-            field=models.DateTimeField(auto_now_add=True, verbose_name='Date Created'),
+            field=models.DateTimeField(
+                auto_now_add=True, verbose_name='Date Created'),
         ),
         migrations.AlterField(
             model_name='cashondeliverytransaction',
             name='order_number',
-            field=models.CharField(max_length=128, verbose_name='Order Number'),
+            field=models.CharField(
+                max_length=128, verbose_name='Order Number'),
         ),
         migrations.AlterField(
             model_name='cashondeliverytransaction',
             name='reference',
-            field=models.CharField(blank=True, default=cashondelivery.models._make_uuid, max_length=100, unique=True, verbose_name='Reference'),
+            field=models.CharField(blank=True, default=cashondelivery.models._make_uuid,
+                                   max_length=100, unique=True, verbose_name='Reference'),
         ),
     ]
