@@ -14,22 +14,9 @@ Installation
 
 .. code-block:: python
 
-    from cashondelivery.dashboard.app import application as cashon
+    from cashondelivery.dashboard.app import application as cod_app
     
-    url(r'^dashboard/cash-on/', include(cashon.urls)),
-
-
-* Use cashondelivery checkout app:
-
-.. code-block:: python
-
-    # file: <project>/checkout/app.py -- forked checkout app
-
-    # replace default checkout app with cashondelivery app
-    from oscar.apps.checkout import app
-    from cashondelivery.app import application as checkout_app
-
-    app.application = checkout_app
+    url(r'^dashboard/cod/', include(cod_app.urls)),
 
 * Add cashondelivery to dashboard navigation:
 
@@ -49,3 +36,15 @@ Installation
                 },
                 ...
         ...
+
+* Use cashondelivery checkout app:
+
+.. code-block:: python
+
+    # file: <project>/checkout/app.py -- forked checkout app
+
+    # replace default checkout app with cashondelivery app
+    from oscar.apps.checkout import app
+    from cashondelivery.app import application as cod_app
+
+    app.application = cod_app
