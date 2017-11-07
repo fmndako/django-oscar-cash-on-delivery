@@ -23,9 +23,29 @@ Installation
 
 .. code-block:: python
 
-    # patch checkout app where we override the payment details view
+    # file: <project>/checkout/app.py -- forked checkout app
+
+    # replace default checkout app with cashondelivery app
     from oscar.apps.checkout import app
     from cashondelivery.app import application as checkout_app
 
     app.application = checkout_app
 
+* Add cashondelivery to dashboard navigation:
+
+.. code-block:: python
+
+    # settings
+    OSCAR_DASHBOARD_NAVIGATION = [
+        ...
+        {
+            'label': _('Fulfilment'),
+            'icon': 'icon-shopping-cart',
+            'children': [
+                ...
+                {
+                    'label': _('COD transactions'),
+                    'url_name': 'cashondelivery-transaction-list',
+                },
+                ...
+        ...
