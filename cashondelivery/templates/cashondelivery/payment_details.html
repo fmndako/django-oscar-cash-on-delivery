@@ -20,10 +20,9 @@
     <p>{% trans "You've chosen to pay cash on delivery." %}</p>
 
     <div class="row-fluid">
-        
-        <div class="well span5">    
+        <div class="well col-sm-6">
         <form action="{% url 'checkout:preview' %}" class="payment-details form-horizontal" method="post">
-            
+
                 {% csrf_token %}
                 {{ billing_address_form.non_field_errors }}
 
