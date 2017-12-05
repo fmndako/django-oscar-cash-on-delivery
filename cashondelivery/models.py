@@ -11,9 +11,12 @@ def _make_uuid():
 class CashOnDeliveryTransaction(models.Model):
     order_number = models.CharField(_('Order Number'), max_length=128)
     date_created = models.DateTimeField(_('Date Created'), auto_now_add=True)
-    amount = models.DecimalField(_('Amount'), max_digits=12, decimal_places=2, null=True, blank=True)
-    currency = models.CharField(_('Currency'), max_length=8, null=True, blank=True)
-    reference = models.CharField(_('Reference'), max_length=100, blank=True, unique=True, default=_make_uuid)
+    amount = models.DecimalField(
+        _('Amount'), max_digits=12, decimal_places=2, null=True, blank=True)
+    currency = models.CharField(
+        _('Currency'), max_length=8, null=True, blank=True)
+    reference = models.CharField(
+        _('Reference'), max_length=100, blank=True, unique=True, default=_make_uuid)
     confirmed = models.BooleanField(_('Confirmed'), default=False)
     date_confirmed = models.DateTimeField(_('Date Confirmed'), auto_now=True)
 

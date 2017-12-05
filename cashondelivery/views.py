@@ -3,17 +3,18 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from oscar.apps.checkout.views import PaymentDetailsView
-from oscar.core.loading import get_class
-from oscar.core.loading import get_classes
-from oscar.core.loading import get_model
-from oscar.apps.payment.models import Source
-from oscar.apps.payment.models import SourceType
+# from oscar.apps.checkout.views import PaymentDetailsView
+# from oscar.apps.payment.models import Source
+# from oscar.apps.payment.models import SourceType
+from oscar.core.loading import get_model, get_class
 
 from cashondelivery.forms import BillingAddressForm
 from cashondelivery import gateway
 
 BillingAddress = get_model("order", "BillingAddress")
+Source = get_model("payment", "Source")
+SourceType = get_model("payment", "SourceType")
+PaymentDetailsView = get_class("checkout.views", "PaymentDetailsView")
 
 
 class PaymentDetailsView(PaymentDetailsView):
@@ -30,7 +31,8 @@ class PaymentDetailsView(PaymentDetailsView):
             # On the preview view, we extract the billing address into the
             # template context so we can show it to the customer.
             ctx['billing_address'] = kwargs[
-                'billing_address_form'].save(commit=False)
+                'billing_address_form'
+            ].save(commit=False)
         return ctx
 
     def get_billing_address_form(self, billing_address):
@@ -66,8 +68,9 @@ class PaymentDetailsView(PaymentDetailsView):
             request, billing_address_form=address_form)
 
     def handle_payment(self, order_number, total, **kwargs):
-        reference = gateway.create_transaction(order_number, total)
-        source_type, is_created = SourceType.objects.get_or_create(name='Cash on Delivery')
+        # reference = gateway.create_transaction(order_number, total)
+        source_type, is_created = SourceType.objects.get_or_create(
+            name='Cash on Delivery')
         source = Source(
             source_type=source_type,
             currency=total.currency,
@@ -75,4 +78,4 @@ class PaymentDetailsView(PaymentDetailsView):
             amount_debited=total.incl_tax
         )
         self.add_payment_source(source)
-        self.add_payment_event('Issued', total.incl_tax, reference=reference)
+        # self.add_payment_event('Issued', total.incl_tax, reference=reference)

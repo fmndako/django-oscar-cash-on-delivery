@@ -8,24 +8,43 @@ Cash on delivery payment module for django-oscar
 Installation
 ------------
 
-* Install: `pip install -e git+http://github.com/pauloprea/django-oscar-cash-on-delivery#egg=cashondelivery`
+* Install: `pip install -e git+https://github.com/michaelkuty/django-oscar-cash-on-delivery#egg=cashondelivery`
 * Add ``cashondelivery`` to ``INSTALLED_APPS``
 * Add ``cashondelivery`` urls to project urls:
 
 .. code-block:: python
 
-    from cashondelivery.dashboard.app import application as cashon
+    from cashondelivery.dashboard.app import application as cod_app
     
-    url(r'^dashboard/cash-on/', include(cashon.urls)),
+    url(r'^dashboard/cod/', include(cod_app.urls)),
 
+* Add cashondelivery to dashboard navigation:
+
+.. code-block:: python
+
+    # settings
+    OSCAR_DASHBOARD_NAVIGATION = [
+        ...
+        {
+            'label': _('Fulfilment'),
+            'icon': 'icon-shopping-cart',
+            'children': [
+                ...
+                {
+                    'label': _('COD transactions'),
+                    'url_name': 'cashondelivery-transaction-list',
+                },
+                ...
+        ...
 
 * Use cashondelivery checkout app:
 
 .. code-block:: python
 
-    # patch checkout app where we override the payment details view
+    # file: <project>/checkout/app.py -- forked checkout app
+
+    # replace default checkout app with cashondelivery app
     from oscar.apps.checkout import app
-    from cashondelivery.app import application as checkout_app
+    from cashondelivery.app import application as cod_app
 
-    app.application = checkout_app
-
+    app.application = cod_app
