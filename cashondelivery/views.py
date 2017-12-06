@@ -3,15 +3,18 @@ from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
 
-from oscar.core.loading import get_model, get_class
+from oscar.core.loading import (
+  get_model, 
+  get_class
+)
 
 from cashondelivery.forms import BillingAddressForm
 from cashondelivery import gateway
 
 BillingAddress = get_model("order", "BillingAddress")
+PaymentDetailsView = get_class("checkout.views", "PaymentDetailsView")
 Source = get_model("payment", "Source")
 SourceType = get_model("payment", "SourceType")
-PaymentDetailsView = get_class("checkout.views", "PaymentDetailsView")
 
 
 class PaymentDetailsView(PaymentDetailsView):
