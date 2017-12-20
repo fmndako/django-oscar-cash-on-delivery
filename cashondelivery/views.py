@@ -68,7 +68,6 @@ class PaymentDetailsView(PaymentDetailsView):
             request, billing_address_form=address_form)
 
     def handle_payment(self, order_number, total, **kwargs):
-        reference = gateway.create_transaction(order_number, total)
         source_type, is_created = SourceType.objects.get_or_create(
             name='Cash on Delivery')
         source = Source(
@@ -78,4 +77,3 @@ class PaymentDetailsView(PaymentDetailsView):
             amount_debited=total.incl_tax
         )
         self.add_payment_source(source)
-        self.add_payment_event('Issued', total.incl_tax, reference=reference)
