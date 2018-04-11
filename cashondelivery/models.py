@@ -38,3 +38,9 @@ class CashOnDeliveryTransaction(models.Model):
     def __unicode__(self):
         return u'method: %s: amount: %s %s' % (
             self.method, self.amount, self.currency)
+
+    def confirm(self, save=True):
+        if not self.confirmed:
+            self.confirmed = True
+            self.save() # date_confirmed gets set automatically
+            return True
