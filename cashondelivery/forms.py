@@ -23,7 +23,11 @@ class BillingAddressForm(payment_forms.BillingAddressForm):
         (NEW_ADDRESS, _('Enter a new address')),
     )
     same_as_shipping = forms.ChoiceField(
-        widget=forms.RadioSelect, choices=CHOICES, initial=SAME_AS_SHIPPING)
+        widget=forms.RadioSelect, 
+        choices=CHOICES, 
+        initial=SAME_AS_SHIPPING, 
+        label=_('Same as shipping')
+    )
 
     class Meta(payment_forms.BillingAddressForm):
         model = BillingAddress
@@ -35,6 +39,10 @@ class BillingAddressForm(payment_forms.BillingAddressForm):
 
         super(BillingAddressForm, self).__init__(data, *args, **kwargs)
         self.adjust_country_field()
+        
+        self.order_fields(
+            ['same_as_shipping']
+        )
 
         # If no shipping address (eg a download), then force the
         # 'same_as_shipping' field to have a certain value.
@@ -75,7 +83,8 @@ class BillingAddressForm(payment_forms.BillingAddressForm):
 
     def adjust_country_field(self):
         countries = Country._default_manager.filter(
-            is_shipping_country=True)
+            is_shipping_country=True
+        )
 
         # No need to show country dropdown if there is only one option
         if len(countries) == 1:
