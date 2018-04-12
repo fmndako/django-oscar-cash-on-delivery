@@ -11,13 +11,17 @@ from oscar.core.loading import (
 from cashondelivery.forms import BillingAddressForm
 from cashondelivery import gateway
 
+Source = get_model("payment", "Source")
+SourceType = get_model("payment", "SourceType")
 BillingAddress = get_model("order", "BillingAddress")
 PaymentDetailsView = get_class("checkout.views", "PaymentDetailsView")
 Source = get_model("payment", "Source")
 SourceType = get_model("payment", "SourceType")
 
+OscarPaymentDetailsView = get_class("checkout.views", "PaymentDetailsView")
 
-class PaymentDetailsView(PaymentDetailsView):
+
+class PaymentDetailsView(OscarPaymentDetailsView):
     template_name = 'cashondelivery/payment_details.html'
     template_name_preview = 'cashondelivery/preview.html'
 

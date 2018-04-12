@@ -34,6 +34,17 @@
             <tr><th>{% trans "Currency" %}</th><td>{{ txn.currency }}</td></tr>
             <tr><th>{% trans "Confirmed" %}</th><td>{{ txn.confirmed }}</td></tr>
             <tr><th>{% trans "Date confirmed" %}</th><td>{% if txn.confirmed %}{{ txn.date_confirmed }}{% else %} - {% endif %}</td></tr>
+            {% if not txn.confirmed %}
+                <tr>
+                    <th>{% trans "Actions" %}</th>
+                    <td>
+                        <form id="confirm_cod_form" action="." method="post" class="form-horizontal">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-primary btn-lg" data-loading-text="{% trans 'Confirming...' %}">{% trans 'Confirm Cash on delivery collection' %}</button>
+                        </form>
+                    </td>
+                </tr>
+            {% endif %}
         </tbody>
     </table>
 {% endblock dashboard_content %}
