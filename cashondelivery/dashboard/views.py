@@ -25,5 +25,5 @@ class TransactionDetailView(DetailView):
         else:
             messages.warn(self.request, _("Already confirmed as collected"))
         return HttpResponseRedirect(
-            reverse('cashondelivery-transaction-detail',
+            reverse('cashondelivery_dashboard:cashondelivery-transaction-detail',
                     kwargs={'pk': txn.pk}))

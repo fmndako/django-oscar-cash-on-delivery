@@ -1,33 +1,26 @@
 import django
-from django.conf.urls import url
 from django.contrib.admin.views.decorators import staff_member_required
+from django.utils.translation import gettext_lazy as _
+from django.urls import path
+from oscar.core.loading import get_class
+from oscar.core.application import OscarDashboardConfig
 
-from oscar.core.application import Application
 
-from . import views
+class CashOnDeliveryDashboardConfig(OscarDashboardConfig):
+    name = 'cashondelivery.dashboard'
+    label = 'cashondelivery_dashboard'
 
+    namespace = 'cashondelivery_dashboard'
 
-class CashOnDeliveryDashboardApplication(Application):
-    name = None
-    default_permissions = ['is_staff', ]
+    default_permissions = ['is_staff']
 
-    list_view = views.TransactionListView
-    detail_view = views.TransactionDetailView
+    def ready(self):
+        self.cashondelivery_list_view = get_class('cashondelivery_dashboard.views', 'TransactionListView')
+        self.cashondelivery_detail_view = get_class('cashondelivery_dashboard.views', 'TransactionDetailView')
 
     def get_urls(self):
-        urlpatterns = [
-            url(r'^transactions/$', self.list_view.as_view(),
-                name='cashondelivery-transaction-list'),
-            url(r'^transactions/(?P<pk>\d+)/$', self.detail_view.as_view(),
-                name='cashondelivery-transaction-detail'),
+        urls = [
+            path('transactions/',  self.cashondelivery_list_view.as_view(), name='cashondelivery-transaction-list'),
+            path('transactions/<int:pk>/', self.cashondelivery_detail_view.as_view(), name='cashondelivery-transaction-detail'),
         ]
-
-        if django.VERSION[:2] < (1, 8):
-            from django.conf.urls import patterns
-
-            urlpatterns = patterns('', *urlpatterns)
-
-        return self.post_process_urls(urlpatterns)
-
-
-application = CashOnDeliveryDashboardApplication()
+        return self.post_process_urls(urls)

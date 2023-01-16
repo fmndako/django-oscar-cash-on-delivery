@@ -1,4 +1,4 @@
-{% extends 'dashboard/layout.html' %}
+{% extends 'oscar/dashboard/layout.html' %}
 {% load currency_filters %}
 {% load i18n %}
 
@@ -7,15 +7,17 @@
 {% endblock %}
 
 {% block breadcrumbs %}
-    <ul class="breadcrumb">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>&nbsp;
+            </li>
         <li>
-            <a href="{% url 'dashboard:index' %}">{% trans "Dashboard" %}</a>
+            {% trans "Cash on Delivery" %}&nbsp;
         </li>
-        <li>
-            {% trans "Cash on Delivery" %}
-        </li>
-        <li class="active"><a href="{% url 'cashondelivery-transaction-list' %}">{% trans "Transactions" %}</a></li>
-    </ul>
+        <li class="active"><a href="{% url 'cashondelivery_dashboard:cashondelivery-transaction-list' %}">{% trans "Transactions" %}</a></li>
+        </ol>
+    </nav>
 {% endblock %}
 
 {% block headertext %}
@@ -41,7 +43,7 @@
             {% for txn in transactions %}
                 <tr>
                     <td>
-                        <a href="{% url 'cashondelivery-transaction-detail' txn.id %}">{{ txn.reference|default:"-" }}</a>
+                        <a href="{% url 'cashondelivery_dashboard:cashondelivery-transaction-detail' txn.id %}">{{ txn.reference|default:"-" }}</a>
                     </td>
                     <td>{{ txn.method }}</td>
                     <td>
@@ -55,7 +57,7 @@
             {% endfor %}
             </tbody>
         </table>
-        {% include "partials/pagination.html" %}
+        {% include "oscar/partials/pagination.html" %}
     {% else %}
         <p>{% trans "No transactions have been made yet." %}</p>
     {% endif %}

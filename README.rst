@@ -3,20 +3,22 @@
 COD for django-oscar
 ====================
 
-Cash on delivery payment module for django-oscar
+Cash on delivery payment module for django-oscar 
 
 Installation
 ------------
 
-* Install: ``pip install -e git+https://github.com/michaelkuty/django-oscar-cash-on-delivery#egg=cashondelivery``
+* Install: ``pip install git+https://github.com/fmndako/django-oscar-cash-on-delivery``
 * Add ``cashondelivery`` to ``INSTALLED_APPS``
+* Add ``cashondelivery.dashboard.app.CashOnDeliveryDashboardConfig`` to ``INSTALLED_APPS``
+
 * Add ``cashondelivery`` urls to project urls:
 
 .. code-block:: python
 
     from cashondelivery.dashboard.app import application as cod_app
     
-    url(r'^dashboard/cod/', include(cod_app.urls)),
+        path('dashboard/cod/',  apps.get_app_config('cashondelivery_dashboard').urls),
 
 * Add cashondelivery to dashboard navigation:
 
@@ -32,7 +34,7 @@ Installation
                 ...
                 {
                     'label': _('COD transactions'),
-                    'url_name': 'cashondelivery-transaction-list',
+                    'url_name': 'cashondelivery_dashboard:cashondelivery-transaction-list',
                 },
                 ...
         ...
