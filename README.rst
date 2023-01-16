@@ -16,8 +16,7 @@ Installation
 
 .. code-block:: python
 
-    from cashondelivery.dashboard.app import application as cod_app
-    
+       
         path('dashboard/cod/',  apps.get_app_config('cashondelivery_dashboard').urls),
 
 * Add cashondelivery to dashboard navigation:
