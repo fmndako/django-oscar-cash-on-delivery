@@ -2,7 +2,7 @@ from django.views.generic import ListView, DetailView
 from django.http import HttpResponseRedirect
 from django.contrib import messages
 from django.urls import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from cashondelivery import models
 

@@ -1,7 +1,7 @@
 from django import http
 from django.contrib import messages
 from django.core.urlresolvers import reverse
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 
 from oscar.core.loading import (
   get_model, 
